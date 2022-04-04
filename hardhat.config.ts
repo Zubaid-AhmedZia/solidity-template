@@ -1,17 +1,15 @@
-import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-etherscan";
+import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
+import { config as dotenvConfig } from "dotenv";
 import "hardhat-gas-reporter";
+import { HardhatUserConfig } from "hardhat/config";
+import { NetworkUserConfig } from "hardhat/types";
+import { resolve } from "path";
 import "solidity-coverage";
 
 import "./tasks/accounts";
 import "./tasks/deploy";
-
-import { resolve } from "path";
-
-import { config as dotenvConfig } from "dotenv";
-import { HardhatUserConfig } from "hardhat/config";
-import { NetworkUserConfig } from "hardhat/types";
 
 dotenvConfig({ path: resolve(__dirname, "./.env") });
 
@@ -27,12 +25,12 @@ if (!infuraApiKey) {
 }
 
 const chainIds = {
-  arbitrum: 42161,
+  "arbitrum-mainnet": 42161,
   avalanche: 43114,
   bsc: 56,
   hardhat: 31337,
   mainnet: 1,
-  optimism: 10,
+  "optimism-mainnet": 10,
   "polygon-mainnet": 137,
   "polygon-mumbai": 80001,
   rinkeby: 4,
@@ -88,11 +86,11 @@ const config: HardhatUserConfig = {
       },
       chainId: chainIds.hardhat,
     },
-    arbitrum: getChainConfig("arbitrum"),
+    arbitrum: getChainConfig("arbitrum-mainnet"),
     avalanche: getChainConfig("avalanche"),
     bsc: getChainConfig("bsc"),
     mainnet: getChainConfig("mainnet"),
-    optimism: getChainConfig("optimism"),
+    optimism: getChainConfig("optimism-mainnet"),
     "polygon-mainnet": getChainConfig("polygon-mainnet"),
     "polygon-mumbai": getChainConfig("polygon-mumbai"),
     rinkeby: getChainConfig("rinkeby"),
@@ -104,7 +102,7 @@ const config: HardhatUserConfig = {
     tests: "./test",
   },
   solidity: {
-    version: "0.8.12",
+    version: "0.8.13",
     settings: {
       metadata: {
         // Not including the metadata hash
